@@ -1,0 +1,49 @@
+name: "KiCad release"
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  Fabrication:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get version
+        id: get_version
+        uses: battila7/get-version-action@v2
+        if: startsWith(github.ref, 'refs/tags/')
+
+      # From https://github.com/marketplace/actions/substitute-string
+      - name: Set schematic version
+        uses: bluwy/substitute-string-action@v1
+        with:
+          _input_file: TBM930_De-ice_panel.sch
+          _output_file: TBM930_De-ice_panel.sch
+          _format_key: '%%key%%'
+          version: ${{ steps.get_version.outputs.version }}
+
+      - name: Generate documentation fabrication files
+        uses: INTI-CMNB/KiBot@v1
+        with:
+          config: ".kibot/release.kibot.yaml"
+          dir: "Fabrication'"
+          schema: "TBM930_De-ice_panel.sch"
+          board: "TBM930_De-ice_panel.kicad_pcb"
+
+      - name: Upload release files
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: Fabrication/**
+
+      - name: Retrieve results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: Fabrication
+          path: Fabrication
+          if-no-files-found: warn

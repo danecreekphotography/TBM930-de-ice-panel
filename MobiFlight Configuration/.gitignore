@@ -1,0 +1,4 @@
+# Override the rule for excluding .xml files for anything in the
+# Mobiflight Configuration folder.
+
+!*.xml

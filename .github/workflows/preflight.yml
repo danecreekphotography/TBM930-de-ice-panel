@@ -1,0 +1,20 @@
+name: "KiBot preflight"
+
+on:
+  pull_request:
+    paths:
+      - "*.sch"
+      - "*.kicad_pcb"
+      - ".kibot/*.kibot.yaml"
+      - ".github/workflows/*.yml"
+
+jobs:
+  Fabrication:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: INTI-CMNB/KiBot@v1
+        with:
+          config: ".kibot/preflight.kibot.yaml"
+          schema: "TBM930_De-ice_panel.sch"
+          board: "TBM930_De-ice_panel.kicad_pcb"

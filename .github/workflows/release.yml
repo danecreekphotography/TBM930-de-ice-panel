@@ -4,6 +4,11 @@ on:
   release:
     types: [published]
   pull_request:
+    paths:
+      - "*.sch"
+      - "*.kicad_pcb"
+      - ".kibot/*.kibot.yaml"
+      - ".github/workflows/*.yml"
 
 jobs:
   Generate fabrication files and documentation:

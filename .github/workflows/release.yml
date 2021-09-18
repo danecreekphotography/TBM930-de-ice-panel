@@ -11,7 +11,7 @@ on:
       - ".github/workflows/*.yml"
 
 jobs:
-  Generate fabrication files and documentation:
+  FabricationAndDocumentation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

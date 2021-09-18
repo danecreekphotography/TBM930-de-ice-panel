@@ -1,0 +1,61 @@
+name: "KiBot"
+
+on:
+  release:
+    types: [published]
+  pull_request:
+    paths:
+      - "*.sch"
+      - "*.kicad_pcb"
+      - ".kibot/*.kibot.yaml"
+      - ".github/workflows/*.yml"
+
+jobs:
+  FabricationAndDocumentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get GitHub release version
+        id: get_version
+        uses: battila7/get-version-action@v2
+        if: startsWith(github.ref, 'refs/tags/')
+
+      # From https://github.com/marketplace/actions/substitute-string
+      - name: Set schematic version
+        uses: bluwy/substitute-string-action@v1
+        with:
+          _input-file: TBM930_De-ice_panel.sch
+          _output-file: TBM930_De-ice_panel.sch
+          _format-key: "%%key%%"
+          version: ${{ steps.get_version.outputs.version }}
+
+      - name: Generate documentation fabrication files
+        uses: INTI-CMNB/KiBot@v1
+        with:
+          config: ".kibot/release.kibot.yaml"
+          dir: "Fabrication"
+          schema: "TBM930_De-ice_panel.sch"
+          board: "TBM930_De-ice_panel.kicad_pcb"
+
+      - name: Upload release files
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            Fabrication/
+            !**/*-drc.txt
+            !**/*-erc.txt
+
+      - name: Retrieve results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: TBM930DeIcePanel
+          path: |
+            Fabrication/
+            !**/*-drc.txt
+            !**/*-erc.txt
+          if-no-files-found: warn

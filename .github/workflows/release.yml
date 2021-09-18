@@ -3,6 +3,7 @@ name: "KiBot"
 on:
   release:
     types: [published]
+  pull_request:
 
 jobs:
   Generate fabrication files and documentation:
@@ -21,7 +22,7 @@ jobs:
         with:
           _input_file: TBM930_De-ice_panel.sch
           _output_file: TBM930_De-ice_panel.sch
-          _format_key: '%%key%%'
+          _format_key: "%%key%%"
           version: ${{ steps.get_version.outputs.version }}
 
       - name: Generate documentation fabrication files

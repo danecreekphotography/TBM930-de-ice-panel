@@ -34,7 +34,7 @@ jobs:
         uses: INTI-CMNB/KiBot@v1
         with:
           config: ".kibot/release.kibot.yaml"
-          dir: "Fabrication'"
+          dir: "Fabrication"
           schema: "TBM930_De-ice_panel.sch"
           board: "TBM930_De-ice_panel.kicad_pcb"
 

@@ -52,7 +52,7 @@ jobs:
         with:
           name: TBM930DeIcePanel
           path: |
-            Fabrication/*/
+            Fabrication/*/**
             !**/*-drc.txt
             !**/*-erc.txt
           if-no-files-found: warn

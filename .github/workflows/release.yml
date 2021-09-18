@@ -38,13 +38,18 @@ jobs:
           schema: "TBM930_De-ice_panel.sch"
           board: "TBM930_De-ice_panel.kicad_pcb"
 
+      - name: Zip release files
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r TBM930DeIcePanel.zip Fabrication
+
       - name: Upload release files
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: Fabrication/**
+          files: TBM930DeIcePanel.zip
 
       - name: Retrieve results
         if: ${{ always() }}

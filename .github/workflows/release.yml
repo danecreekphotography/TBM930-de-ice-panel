@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get version
+      - name: Get GitHub release version
         id: get_version
         uses: battila7/get-version-action@v2
         if: startsWith(github.ref, 'refs/tags/')
@@ -25,9 +25,9 @@ jobs:
       - name: Set schematic version
         uses: bluwy/substitute-string-action@v1
         with:
-          _input_file: TBM930_De-ice_panel.sch
-          _output_file: TBM930_De-ice_panel.sch
-          _format_key: "%%key%%"
+          _input-file: TBM930_De-ice_panel.sch
+          _output-file: TBM930_De-ice_panel.sch
+          _format-key: "%%key%%"
           version: ${{ steps.get_version.outputs.version }}
 
       - name: Generate documentation fabrication files

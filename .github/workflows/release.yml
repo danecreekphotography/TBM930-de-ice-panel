@@ -1,11 +1,11 @@
-name: "KiCad release"
+name: "KiBot"
 
 on:
   release:
     types: [published]
 
 jobs:
-  Fabrication:
+  Generate fabrication files and documentation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

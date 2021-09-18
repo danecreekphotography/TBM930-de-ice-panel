@@ -3,15 +3,12 @@ name: "KiBot"
 on:
   release:
     types: [published]
-  pull_request:
-    paths:
-      - "*.sch"
-      - "*.kicad_pcb"
-      - ".kibot/*.kibot.yaml"
-      - ".github/workflows/*.yml"
 
 jobs:
   FabricationAndDocumentation:
+    env:
+      BaseFileName: TBM930_De-ice_panel
+      OutputFolder: Fabrication
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,18 +22,23 @@ jobs:
       - name: Set schematic version
         uses: bluwy/substitute-string-action@v1
         with:
-          _input-file: TBM930_De-ice_panel.sch
-          _output-file: TBM930_De-ice_panel.sch
+          _input-file: ${{ env.BaseFileName }}.sch
+          _output-file: ${{ env.BaseFileName }}.sch
           _format-key: "%%key%%"
           version: ${{ steps.get_version.outputs.version }}
 
       - name: Generate documentation fabrication files
         uses: INTI-CMNB/KiBot@v1
         with:
-          config: ".kibot/release.kibot.yaml"
-          dir: "Fabrication"
-          schema: "TBM930_De-ice_panel.sch"
-          board: "TBM930_De-ice_panel.kicad_pcb"
+          config: .kibot/release.kibot.yaml
+          dir: ${{ OutputFolder }}
+          schema: ${{ env.BaseFileName }}.sch
+          board: ${{ env.BaseFileName }}.kicad_pcb
+
+      - name: Zip release files
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r ${{ env.BaseFileName }}.zip ${{ OutputFolder }}
 
       - name: Upload release files
         uses: softprops/action-gh-release@v1
@@ -44,15 +46,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: Fabrication/**
-
-      - name: Retrieve results
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: TBM930DeIcePanel
-          path: |
-            Fabrication/
-            !**/*-drc.txt
-            !**/*-erc.txt
-          if-no-files-found: warn
+          files: ${{ env.BaseFileName }}.zip

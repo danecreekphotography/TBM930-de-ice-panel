@@ -39,7 +39,7 @@ jobs:
         uses: montudor/action-zip@v1
 
       - name: Zip release files
-        run: zip -qq -r "${{ env.BaseFileName }}.zip" .
+        run: zip -qq -r "../${{ env.BaseFileName }}.zip" .
         working-directory: ${{ env.OutputFolder }}
 
       - name: Upload release files
@@ -48,4 +48,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ env.OutputFolder }}/${{ env.BaseFileName }}.zip
+          files: ${{ env.BaseFileName }}.zip

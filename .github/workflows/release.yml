@@ -35,11 +35,12 @@ jobs:
           schema: ${{ env.BaseFileName }}.sch
           board: ${{ env.BaseFileName }}.kicad_pcb
 
-      - name: Zip release files
+      - name: Install zip
         uses: montudor/action-zip@v1
+
+      - name: Zip release files
+        run: zip -qq -r "${{ env.BaseFileName }}.zip" .
         working-directory: ${{ env.OutputFolder }}
-        with:
-          args: zip -qq -r "${{ env.BaseFileName }}.zip" .
 
       - name: Upload release files
         uses: softprops/action-gh-release@v1

@@ -47,3 +47,11 @@ outputs:
       bottom: True
       show_components: none
       dpi: 600
+
+  - name: step
+    comment: "Renders - 3D model (STEP)"
+    type: step
+    dir: "Renders"
+    options:
+      metric_units: true
+      origin: 85,66.2

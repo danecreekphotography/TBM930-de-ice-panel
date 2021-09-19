@@ -35,7 +35,7 @@ jobs:
           _format-key: "%%key%%"
           version: ${{ steps.get_version.outputs.version }}
 
-      - name: Generate documentation fabrication files
+      - name: Generate documentation and fabrication files
         uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/release.kibot.yaml
@@ -46,13 +46,17 @@ jobs:
       - name: Install zip
         uses: montudor/action-zip@v1
 
-      - name: Zip documentation
-        run: zip -qq -r "../${{ env.BaseFileName }}-Documentation.zip" BOM PDFs Renders
+      - name: Zip schematic
+        run: zip -qq -r "../${{ env.BaseFileName }}-Schematic.zip" BOM PDFs Renders
         working-directory: ${{ env.OutputFolder }}
 
       - name: Zip JLCPCB fabrication files
         run: zip -qq -r "../../${{ env.BaseFileName }}-JLCPCB.zip" ${{ env.BaseFileName }}-JLCPCB.zip ${{ env.BaseFileName }}_bom_jlc.csv ${{ env.BaseFileName }}_cpl_jlc.csv
         working-directory: ${{ env.OutputFolder }}/JLCPCB
+
+      - name: Zip MobiFlight configuration
+        run: zip -qq -r "../${{ env.BaseFileName }}-MobiFlight-Configuration.zip" .
+        working-directory: "MobiFlight Configuration"
 
       - name: Upload release files
         uses: softprops/action-gh-release@v1
@@ -61,5 +65,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            ${{ env.BaseFileName }}-Documentation.zip
+            ${{ env.BaseFileName }}-MobiFlight-Configuration.zip
+            ${{ env.BaseFileName }}-Schematic.zip
             ${{ env.BaseFileName }}-JLCPCB.zip
+            ${{ env.OutputFolder }}/PCBWay/${{ env.BaseFileName }}-PCBWay.zip

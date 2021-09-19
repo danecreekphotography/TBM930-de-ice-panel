@@ -27,6 +27,14 @@ jobs:
           _format-key: "%%key%%"
           version: ${{ steps.get_version.outputs.version }}
 
+      - name: Set PCB version
+        uses: bluwy/substitute-string-action@v1
+        with:
+          _input-file: ${{ env.BaseFileName }}.kicad_pcb
+          _output-file: ${{ env.BaseFileName }}.kicad_pcb
+          _format-key: "%%key%%"
+          version: ${{ steps.get_version.outputs.version }}
+
       - name: Generate documentation fabrication files
         uses: INTI-CMNB/KiBot@v1
         with:

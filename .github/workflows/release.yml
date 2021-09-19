@@ -54,6 +54,10 @@ jobs:
         run: zip -qq -r "../../${{ env.BaseFileName }}-JLCPCB.zip" ${{ env.BaseFileName }}-JLCPCB.zip ${{ env.BaseFileName }}_bom_jlc.csv ${{ env.BaseFileName }}_cpl_jlc.csv
         working-directory: ${{ env.OutputFolder }}/JLCPCB
 
+      - name: Zip MobiFlight configuration
+        run: zip -qq -r "../${{ env.BaseFileName }}-MobiFlight-Configuration.zip" .
+        working-directory: "MobiFlight Configuration"
+
       - name: Upload release files
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -61,6 +65,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
+            ${{ env.BaseFileName }}-MobiFlight-Configuration.zip
             ${{ env.BaseFileName }}-Documentation.zip
             ${{ env.BaseFileName }}-JLCPCB.zip
-            ${{ env.OutputFolder }}/${{ env.BaseFileName }}-PCBWay.zip
+            ${{ env.OutputFolder }}/PCBWay/${{ env.BaseFileName }}-PCBWay.zip

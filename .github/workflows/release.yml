@@ -51,7 +51,7 @@ jobs:
         working-directory: ${{ env.OutputFolder }}
 
       - name: Zip JLCPCB fabrication files
-        run: zip -qq -r "../../${{ env.BaseFileName }}-JLCPCB.zip" ${{ env.BaseFileName }}-JLCPCB.zip ${{ env.BaseFileName }}_bom_jlc.csv ${{ env.BaseFileName }}_cpl-jlc.csv
+        run: zip -qq -r "../../${{ env.BaseFileName }}-JLCPCB.zip" ${{ env.BaseFileName }}-JLCPCB.zip ${{ env.BaseFileName }}_bom_jlc.csv ${{ env.BaseFileName }}_cpl_jlc.csv
         working-directory: ${{ env.OutputFolder }}/JLCPCB
 
       - name: Upload release files

@@ -46,8 +46,8 @@ jobs:
       - name: Install zip
         uses: montudor/action-zip@v1
 
-      - name: Zip documentation
-        run: zip -qq -r "../${{ env.BaseFileName }}-Documentation.zip" BOM PDFs Renders
+      - name: Zip schematic
+        run: zip -qq -r "../${{ env.BaseFileName }}-Schematic.zip" BOM PDFs Renders
         working-directory: ${{ env.OutputFolder }}
 
       - name: Zip JLCPCB fabrication files
@@ -66,6 +66,6 @@ jobs:
         with:
           files: |
             ${{ env.BaseFileName }}-MobiFlight-Configuration.zip
-            ${{ env.BaseFileName }}-Documentation.zip
+            ${{ env.BaseFileName }}-Schematic.zip
             ${{ env.BaseFileName }}-JLCPCB.zip
             ${{ env.OutputFolder }}/PCBWay/${{ env.BaseFileName }}-PCBWay.zip

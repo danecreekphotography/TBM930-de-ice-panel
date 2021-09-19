@@ -1,4 +1,4 @@
-update=Sat Sep 18 22:46:03 2021
+update=Sun Sep 19 13:21:32 2021
 version=1
 last_client=eeschema
 [general]
@@ -274,7 +274,7 @@ dPairViaGap=0.25
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
-PlotDirectoryName=/workspaces/TBM930-de-ice-panel/.kibot/Fabrication/PDFs/
+PlotDirectoryName=/workspaces/TBM930-de-ice-panel/Fabrication/PDFs/
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=Pcbnew

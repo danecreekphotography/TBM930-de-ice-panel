@@ -8,3 +8,7 @@ triggers generation of a suite of PCB documentation, interactive BOM, and submis
 The GitHub release version is inserted into the generated documentation and gerber files as well.
 
 See the `.github/workflows` and `.kibot` folders for the scripts that do the CI/CD work.
+
+The repo is also configured for [VSCode Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+development to assist in testing the KiBot automation. Simply clone this repo as a remote container then run the default build task
+to execute the KiBot script in `.kibot/release.kibot.yaml`.

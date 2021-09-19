@@ -38,9 +38,13 @@ jobs:
       - name: Install zip
         uses: montudor/action-zip@v1
 
-      - name: Zip release files
-        run: zip -qq -r "../${{ env.BaseFileName }}.zip" .
+      - name: Zip documentation
+        run: zip -qq -r "../${{ env.BaseFileName }}-Documentation.zip" BOM PDFs Renders
         working-directory: ${{ env.OutputFolder }}
+
+      - name: Zip JLCPCB fabrication files
+        run: zip -qq -r "../../${{ env.BaseFileName }}-JLCPCB.zip" ${{ env.BaseFileName }}-JLCPCB.zip ${{ env.BaseFileName }}_bom-jlc.csv ${{ env.BaseFileName }}_cpl-jlc.csv
+        working-directory: ${{ env.OutputFolder }}/JLCPCB
 
       - name: Upload release files
         uses: softprops/action-gh-release@v1
@@ -48,4 +52,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ env.BaseFileName }}.zip
+          files: |
+            ${{ env.BaseFileName }}-Documentation.zip
+            ${{ env.BaseFileName }}-JLCPCB.zip

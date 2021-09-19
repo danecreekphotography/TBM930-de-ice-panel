@@ -39,3 +39,4 @@ filters:
 import:
   - common.kibot.yaml
   - JLCPCB.kibot.yaml
+  - PCBWay.kibot.yaml

@@ -35,7 +35,7 @@ jobs:
           _format-key: "%%key%%"
           version: ${{ steps.get_version.outputs.version }}
 
-      - name: Generate documentation fabrication files
+      - name: Generate documentation and fabrication files
         uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/release.kibot.yaml
@@ -63,3 +63,4 @@ jobs:
           files: |
             ${{ env.BaseFileName }}-Documentation.zip
             ${{ env.BaseFileName }}-JLCPCB.zip
+            ${{ env.OutputFolder }}/${{ env.BaseFileName }}-PCBWay.zip

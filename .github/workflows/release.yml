@@ -37,9 +37,9 @@ jobs:
 
       - name: Zip release files
         uses: montudor/action-zip@v1
+        working-directory: ${{ env.OutputFolder }}
         with:
           args: zip -qq -r "${{ env.BaseFileName }}.zip" .
-          working-directory: Fabrication
 
       - name: Upload release files
         uses: softprops/action-gh-release@v1
@@ -47,4 +47,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ env.BaseFileName }}.zip
+          files: ${{ env.OutputFolder }}/${{ env.BaseFileName }}.zip

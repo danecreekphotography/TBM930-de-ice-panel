@@ -2,6 +2,8 @@ kibot:
   version: 1
 
 preflight:
+  # Treat ERC warnings as errors
+  erc_warnings: true
   run_erc: true
   run_drc: true
   check_zone_fills: true

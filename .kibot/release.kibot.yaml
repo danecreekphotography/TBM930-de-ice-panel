@@ -9,6 +9,7 @@ preflight:
 
 global:
   output: "%f-%i.%x"
+  kiauto_time_out_scale: 2.0
 
 # This is only for JLCPCB export but the import section only supports
 # importing output configurations, not variants.

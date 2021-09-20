@@ -33,7 +33,7 @@ jobs:
       - name: Set PCB and date
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          include: "*.sch"
+          include: ".*.sch"
           find: "%%date%%"
           date: ${{ steps.date.outputs.date }}
 

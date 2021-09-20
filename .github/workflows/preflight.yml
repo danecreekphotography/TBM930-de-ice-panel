@@ -36,7 +36,7 @@ jobs:
         with:
           include: ".*.sch"
           find: "%%date%%"
-          date: ${{ steps.date.outputs.date }}
+          replace: ${{ steps.date.outputs.date }}
 
       - name: Print number of touched files
         run: echo ${{ steps.replacement.outputs.modifiedFiles }}

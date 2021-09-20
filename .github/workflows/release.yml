@@ -79,7 +79,7 @@ jobs:
         with:
           config: .kibot/release.kibot.yaml
           dir: ${{ env.OutputFolder }}
-          schema: "*.sch"
+          schema: ${{ env.BaseFileName }}.sch
           board: ${{ env.BaseFileName }}.kicad_pcb
 
       # Install the zip command line tool to package up the output

@@ -9,7 +9,7 @@ jobs:
     env:
       BaseFileName: TBM930_De-ice_panel
       # Must be one of the valid Unix timezones from https://www.wikiwand.com/en/List_of_tz_database_time_zones
-      Timezone: "America/Los_Angeles"
+      Timezone: America/Los_Angeles
       OutputFolder: KiBotOutput
     runs-on: ubuntu-latest
     steps:

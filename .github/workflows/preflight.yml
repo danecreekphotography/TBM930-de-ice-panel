@@ -42,3 +42,9 @@ jobs:
           config: .kibot/preflight.kibot.yaml
           schema: ${{ env.BaseFileName }}.sch
           board: ${{ env.BaseFileName }}.kicad_pcb
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: firmware
+          path: KiBotOutput/**

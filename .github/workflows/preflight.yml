@@ -12,13 +12,13 @@ jobs:
   Preflight:
     env:
       BaseFileName: TBM930_De-ice_panel
-      Timezone: "'America/Los Angeles'"
+      Timezone: "America/Los_Angeles"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(TZ=${{ env.Timezone }} date +'%Y-%m-%d %T')"
+        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' date +'%Y-%m-%d %T')"
       - name: Print current date
         id: print_date
         run: echo ${{ steps.date.outputs.date }}

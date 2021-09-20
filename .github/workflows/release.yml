@@ -41,36 +41,26 @@ jobs:
       # Do a string replacement in the schematic file to set the version and date.
       # Any instance of %%version%% in the schematic gets replaced with the release version.
       # Any instance of %%date%% in the schematic gets replaced with the release date and time.
-      - name: Set schematic version
-        uses: jacobtomlinson/gha-find-replace@master
+      - name: Set schematic version and date
+        uses: bluwy/substitute-string-action@v1
         with:
-          include: "*.sch"
-          find: "%%version%%"
-          replace: ${{ steps.get_version.outputs.version }}
-
-      - name: Set schematic date
-        uses: jacobtomlinson/gha-find-replace@master
-        with:
-          include: "*.sch"
-          find: "%%date%%"
-          replace: ${{ steps.date.outputs.date }}
+          _input-file: ${{ env.BaseFileName }}.sch
+          _output-file: ${{ env.BaseFileName }}.sch
+          _format-key: "%%key%%"
+          version: ${{ steps.get_version.outputs.version }}
+          date: ${{ steps.date.outputs.date }}
 
       # Do a string replacement in the PCB file to set the version and date.
       # Any instance of %%version%% in the schematic gets replaced with the release version.
       # Any instance of %%date%% in the schematic gets replaced with the release date and time.
-      - name: Set PCB version
-        uses: jacobtomlinson/gha-find-replace@master
+      - name: Set PCB version and date
+        uses: bluwy/substitute-string-action@v1
         with:
-          include: "${{ env.BaseFileName }}.kicad_pcb"
-          find: "%%version%%"
-          replace: ${{ steps.get_version.outputs.version }}
-
-      - name: Set PCB date
-        uses: jacobtomlinson/gha-find-replace@master
-        with:
-          include: "${{ env.BaseFileName }}.kicad_pcb"
-          find: "%%date%%"
-          replace: ${{ steps.date.outputs.date }}
+          _input-file: ${{ env.BaseFileName }}.kicad_pcb
+          _output-file: ${{ env.BaseFileName }}.kicad_pcb
+          _format-key: "%%key%%"
+          version: ${{ steps.get_version.outputs.version }}
+          date: ${{ steps.date.outputs.date }}
 
       # Actually run KiBot to generate all the files. The KiBot script used is
       # in the .kibot/release.kibot.yaml folder.

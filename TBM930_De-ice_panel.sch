@@ -5,7 +5,7 @@ $Descr USLegal 14000 8500
 encoding utf-8
 Sheet 1 1
 Title "TBM930 de-ice panel"
-Date "2021-09-16"
+Date "%%date%%"
 Rev "%%version%%"
 Comp ""
 Comment1 "Licensed under the MIT License"

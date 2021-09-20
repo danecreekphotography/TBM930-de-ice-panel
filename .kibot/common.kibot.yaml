@@ -32,6 +32,7 @@ outputs:
     type: pcbdraw
     dir: "Renders"
     options:
+      output: "%f-white-%i.%x"
       format: jpg
       style: set-white-enig
       show_components: none
@@ -42,6 +43,7 @@ outputs:
     type: pcbdraw
     dir: "Renders"
     options:
+      output: "%f-white-%i.%x"
       format: jpg
       style: set-white-enig
       bottom: True

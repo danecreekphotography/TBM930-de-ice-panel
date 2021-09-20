@@ -16,6 +16,9 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Print current date
+        id: print_date
+        run: echo ${{ steps.date.outputs.date }}
       - uses: INTI-CMNB/KiBot@v1
         with:
           config: ".kibot/preflight.kibot.yaml"

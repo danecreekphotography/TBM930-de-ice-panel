@@ -35,8 +35,8 @@ filters:
       - column: "LCSC"
         regex: '^C\d+'
 
-# Generate the fab house specific output configurations
+# Generate the documentation and fab house specific files
 import:
-  - common.kibot.yaml
-  - JLCPCB.kibot.yaml
-  - PCBWay.kibot.yaml
+  - documentation-2layer.kibot.yaml
+  - JLCPCB-2layer.kibot.yaml
+  - PCBWay-2layer.kibot.yaml

@@ -10,11 +10,13 @@ on:
 
 jobs:
   Preflight:
+    env:
+      BaseFileName: TBM930_De-ice_panel
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: INTI-CMNB/KiBot@v1
         with:
-          config: ".kibot/preflight.kibot.yaml"
-          schema: "TBM930_De-ice_panel.sch"
-          board: "TBM930_De-ice_panel.kicad_pcb"
+          config: .kibot/preflight.kibot.yaml
+          schema: ${{ env.BaseFileName }}.sch
+          board: ${{ env.BaseFileName }}.kicad_pcb

@@ -46,7 +46,7 @@ jobs:
       - uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/release.kibot.yaml
-          schema: *.sch
+          schema: "*.sch"
           board: ${{ env.BaseFileName }}.kicad_pcb
 
       - name: Archive production artifacts

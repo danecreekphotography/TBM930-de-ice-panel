@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr USLegal 14000 8500
 encoding utf-8
-Sheet 1 1
+Sheet 1 2
 Title "TBM930 de-ice panel"
 Date "%%date%%"
 Rev "%%version%%"
@@ -2169,4 +2169,10 @@ Wire Notes Line
 	10000 4050 8850 4050
 Wire Notes Line
 	8850 4050 8850 3450
+$Sheet
+S 7350 6300 1250 1000
+U 61497505
+F0 "Test subsheet" 50
+F1 "Test subsheet.sch" 50
+$EndSheet
 $EndSCHEMATC

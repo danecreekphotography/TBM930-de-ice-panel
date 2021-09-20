@@ -37,20 +37,20 @@ jobs:
           find: "%%date%%"
           date: ${{ steps.date.outputs.date }}
 
-      - uses: INTI-CMNB/KiBot@v1
-        with:
-          config: .kibot/preflight.kibot.yaml
-          schema: ${{ env.BaseFileName }}.sch
-          board: ${{ env.BaseFileName }}.kicad_pcb
+      # - uses: INTI-CMNB/KiBot@v1
+      #   with:
+      #     config: .kibot/preflight.kibot.yaml
+      #     schema: ${{ env.BaseFileName }}.sch
+      #     board: ${{ env.BaseFileName }}.kicad_pcb
 
       - uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/release.kibot.yaml
-          schema: ${{ env.BaseFileName }}.sch
+          schema: *.sch
           board: ${{ env.BaseFileName }}.kicad_pcb
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: firmware
-          path: KiBotOutput/**
+          name: KiBotFiles
+          path: KiBotOutput/**/*

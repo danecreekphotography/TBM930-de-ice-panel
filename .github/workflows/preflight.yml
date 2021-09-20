@@ -31,11 +31,15 @@ jobs:
       # Any instance of %%version%% in the schematic gets replaced with the release version.
       # Any instance of %%date%% in the schematic gets replaced with the release date and time.
       - name: Set PCB and date
+        id: replacement
         uses: jacobtomlinson/gha-find-replace@master
         with:
           include: ".*.sch"
           find: "%%date%%"
           date: ${{ steps.date.outputs.date }}
+
+      - name: Print number of touched files
+        run: echo ${{ steps.replacement.outputs.modifiedFiles }}
 
       # - uses: INTI-CMNB/KiBot@v1
       #   with:
@@ -48,9 +52,3 @@ jobs:
           config: .kibot/release.kibot.yaml
           schema: "*.sch"
           board: ${{ env.BaseFileName }}.kicad_pcb
-
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: KiBotFiles
-          path: KiBotOutput/**/*

@@ -17,38 +17,13 @@ jobs:
     env:
       # Set this to the base filename of your project.
       BaseFileName: TBM930_De-ice_panel
-      Timezone: America/Los_Angeles
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      # Get the current date and time, in the timezone specified above, for use later.
-      - name: Get current date and time
-        id: date
-        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' date +'%Y-%m-%d %T')"
-
-      # Do a string replacement in the PCB file to set the version and date.
-      # Any instance of %%version%% in the schematic gets replaced with the release version.
-      # Any instance of %%date%% in the schematic gets replaced with the release date and time.
-      - name: Set PCB and date
-        id: replacement
-        uses: jacobtomlinson/gha-find-replace@master
-        with:
-          include: ".*.sch"
-          find: "%%date%%"
-          replace: ${{ steps.date.outputs.date }}
-
-      - name: Print number of touched files
-        run: echo ${{ steps.replacement.outputs.modifiedFiles }}
-
-      # - uses: INTI-CMNB/KiBot@v1
-      #   with:
-      #     config: .kibot/preflight.kibot.yaml
-      #     schema: ${{ env.BaseFileName }}.sch
-      #     board: ${{ env.BaseFileName }}.kicad_pcb
-
+      # Run KiBot with the preflight script
       - uses: INTI-CMNB/KiBot@v1
         with:
-          config: .kibot/release.kibot.yaml
+          config: .kibot/preflight.kibot.yaml
           schema: "*.sch"
           board: ${{ env.BaseFileName }}.kicad_pcb

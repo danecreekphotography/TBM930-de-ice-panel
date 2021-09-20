@@ -20,8 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      # Run KiBot with the preflight script
       - uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/preflight.kibot.yaml
-          schema: ${{ env.BaseFileName }}.sch
+          schema: "*.sch"
           board: ${{ env.BaseFileName }}.kicad_pcb

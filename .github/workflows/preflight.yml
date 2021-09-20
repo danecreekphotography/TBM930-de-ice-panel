@@ -1,3 +1,7 @@
+# This workflow runs erc and drc checks on every pull request that touches a scehmatic or PCB file.
+
+# To use this workflow in your own repo you need to edit the environment variables in the env: section
+# below.
 name: "KiBot"
 
 on:
@@ -11,6 +15,7 @@ on:
 jobs:
   Preflight:
     env:
+      # Set this to the base filename of your project.
       BaseFileName: TBM930_De-ice_panel
     runs-on: ubuntu-latest
     steps:

@@ -1,3 +1,5 @@
+# This KiBot script generates gerbers, drill, bom, and position files for submitting
+# two layer boards to JLCPCB.
 outputs:
   - name: JLCPCB_gerbers
     comment: Gerbers - JLCPCB

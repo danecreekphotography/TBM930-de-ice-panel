@@ -13,7 +13,7 @@
         "-b",
         "TBM930_De-ice_panel.kicad_pcb",
         "--out-dir",
-        "Fabrication"
+        "KiBotOutput"
       ],
       "group": {
         "kind": "build",

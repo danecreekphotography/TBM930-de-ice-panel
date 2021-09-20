@@ -8,9 +8,15 @@ jobs:
   FabricationAndDocumentation:
     env:
       BaseFileName: TBM930_De-ice_panel
+      Timezone: "America/Los Angeles"
       OutputFolder: KiBotOutput
     runs-on: ubuntu-latest
     steps:
+      - uses: szenius/set-timezone@v1.0
+        if: ${{ env.Timezone }}
+        with:
+          timezoneLinux: ${{ env.Timezone }}
+
       - uses: actions/checkout@v2
 
       - name: Get GitHub release version

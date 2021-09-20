@@ -12,7 +12,7 @@ jobs:
   Preflight:
     env:
       BaseFileName: TBM930_De-ice_panel
-      Timezone: "America/Los Angeles"
+      Timezone: "'America/Los Angeles'"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

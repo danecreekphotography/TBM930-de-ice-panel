@@ -8,16 +8,11 @@ jobs:
   FabricationAndDocumentation:
     env:
       BaseFileName: TBM930_De-ice_panel
-      Timezone: "America/Los Angeles"
+      # Must be one of the valid Unix timezones from https://www.wikiwand.com/en/List_of_tz_database_time_zones
+      Timezone: "America/Los_Angeles"
       OutputFolder: KiBotOutput
     runs-on: ubuntu-latest
     steps:
-      - name: Set timezone
-        uses: szenius/set-timezone@v1.0
-        if: ${{ env.Timezone }}
-        with:
-          timezoneLinux: ${{ env.Timezone }}
-
       - uses: actions/checkout@v2
 
       - name: Get GitHub release version
@@ -25,22 +20,27 @@ jobs:
         uses: battila7/get-version-action@v2
         if: startsWith(github.ref, 'refs/tags/')
 
-      # From https://github.com/marketplace/actions/substitute-string
-      - name: Set schematic version
+      - name: Get current date and time
+        id: date
+        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' date +'%Y-%m-%d %T')"
+
+      - name: Set schematic version and date
         uses: bluwy/substitute-string-action@v1
         with:
           _input-file: ${{ env.BaseFileName }}.sch
           _output-file: ${{ env.BaseFileName }}.sch
           _format-key: "%%key%%"
           version: ${{ steps.get_version.outputs.version }}
+          date: ${{ steps.date.outputs.date }}
 
-      - name: Set PCB version
+      - name: Set PCB version and date
         uses: bluwy/substitute-string-action@v1
         with:
           _input-file: ${{ env.BaseFileName }}.kicad_pcb
           _output-file: ${{ env.BaseFileName }}.kicad_pcb
           _format-key: "%%key%%"
           version: ${{ steps.get_version.outputs.version }}
+          date: ${{ steps.date.outputs.date }}
 
       - name: Generate documentation and fabrication files
         uses: INTI-CMNB/KiBot@v1

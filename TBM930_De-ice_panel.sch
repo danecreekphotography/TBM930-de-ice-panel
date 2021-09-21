@@ -2169,4 +2169,10 @@ Wire Notes Line
 	10000 4050 8850 4050
 Wire Notes Line
 	8850 4050 8850 3450
+$Sheet
+S 7400 6250 1450 950 
+U 614A4178
+F0 "Test sheet" 50
+F1 "Test sheet.sch" 50
+$EndSheet
 $EndSCHEMATC

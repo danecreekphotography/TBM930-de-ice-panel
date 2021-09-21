@@ -2169,10 +2169,4 @@ Wire Notes Line
 	10000 4050 8850 4050
 Wire Notes Line
 	8850 4050 8850 3450
-$Sheet
-S 7350 6300 1250 1000
-U 61497505
-F0 "Test subsheet" 50
-F1 "Test subsheet.sch" 50
-$EndSheet
 $EndSCHEMATC

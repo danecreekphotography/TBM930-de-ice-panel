@@ -25,14 +25,5 @@ jobs:
       - uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/preflight.kibot.yaml
-          schema: "*.sch"
+          schema: ${{ env.BaseFileName }}.sch
           board: ${{ env.BaseFileName }}.kicad_pcb
-
-      # Uploads the erc and drc results as artifacts
-      - name: Archive ERC/DRC results
-        uses: actions/upload-artifact@v2
-        with:
-          name: ERC-DRC_results
-          path: |
-            KiBotOutput/*-erc.txt
-            KiBotOutput/*-drc.txt

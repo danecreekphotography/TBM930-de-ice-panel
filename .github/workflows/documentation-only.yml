@@ -8,7 +8,13 @@
 # below.
 name: "KiBot - Generate documentation only"
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Design version"
+        required: true
+        default: "pre-release"
 
 jobs:
   Documentation:
@@ -44,7 +50,7 @@ jobs:
         with:
           include: ".*.sch"
           find: "%%version%%"
-          replace: ${{ env.Version }}
+          replace: ${{ github.event.inputs.version }}
 
       - name: Set schematic date
         uses: jacobtomlinson/gha-find-replace@master
@@ -61,7 +67,7 @@ jobs:
         with:
           include: ".*.kicad_pcb"
           find: "%%version%%"
-          replace: ${{ env.Version }}
+          replace: ${{ github.event.inputs.version }}
 
       - name: Set PCB date
         uses: jacobtomlinson/gha-find-replace@master

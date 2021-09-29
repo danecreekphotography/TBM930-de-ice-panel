@@ -6,9 +6,7 @@
 # below.
 name: "KiBot - Generate documentation only"
 
-on:
-  workflow_dispatch:
-    types: [published]
+on: workflow_dispatch
 
 jobs:
   FabricationAndDocumentation:

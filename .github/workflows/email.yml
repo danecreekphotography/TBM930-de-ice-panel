@@ -4,10 +4,10 @@
 
 # To use this workflow in your own repo you need to edit the environment variables in the env: section
 # below.
-name: "KiBot - Release"
+name: "KiBot - Generate documentation only"
 
 on:
-  release:
+  workflow_dispatch:
     types: [published]
 
 jobs:
@@ -20,6 +20,10 @@ jobs:
       # Set this to the output folder for all of the generated files. Unless you have a very
       # good reason to change this you should leave it as KiBotOutput.
       OutputFolder: KiBotOutput
+      # Set this to the version to include in the schematic and PCB. Since this
+      # script runs outside of the release process it can't pull a version
+      # number automatically from GitHub.
+      Version: pre-release
     runs-on: ubuntu-latest
 
     # These are all the steps that generate the files.
@@ -46,7 +50,7 @@ jobs:
         with:
           include: ".*.sch"
           find: "%%version%%"
-          replace: ${{ steps.get_version.outputs.version }}
+          replace: ${{ env.Version }}
 
       - name: Set schematic date
         uses: jacobtomlinson/gha-find-replace@master
@@ -63,7 +67,7 @@ jobs:
         with:
           include: ".*.kicad_pcb"
           find: "%%version%%"
-          replace: ${{ steps.get_version.outputs.version }}
+          replace: ${{ env.Version }}
 
       - name: Set PCB date
         uses: jacobtomlinson/gha-find-replace@master
@@ -82,41 +86,9 @@ jobs:
           schema: ${{ env.BaseFileName }}.sch
           board: ${{ env.BaseFileName }}.kicad_pcb
 
-      # Install the zip command line tool to package up the output
-      - name: Install zip
-        uses: montudor/action-zip@v1
-
-      # Zip all the documentation. Any files in the BOM, PDFs, and Renders subfolder
-      # are automatically included.
-      - name: Zip documentation
-        run: zip -qq -r "../${{ env.BaseFileName }}-Documentation.zip" BOM PDFs Renders
-        working-directory: ${{ env.OutputFolder }}
-
-      # Zip the JLCPCB files. This is a special step for JLCPCB because there are gerbers (already zipped by KiBot),
-      # BOM, and position files for SMT fabrication.
-      - name: Zip JLCPCB fabrication files
-        run: zip -qq -r "../../${{ env.BaseFileName }}-JLCPCB.zip" ${{ env.BaseFileName }}-JLCPCB.zip ${{ env.BaseFileName }}_bom_jlc.csv ${{ env.BaseFileName }}_cpl_jlc.csv
-        working-directory: ${{ env.OutputFolder }}/JLCPCB
-
-      # This step is specific to this board design as it is for use with the MobiFlight desktop
-      # app. You should delete this step when using this in your own GitHub repo.
-      - name: Zip MobiFlight configuration
-        run: zip -qq -r "../${{ env.BaseFileName }}-MobiFlight-Configuration.zip" .
-        working-directory: "MobiFlight Configuration"
-
-      # Upload all the zip files to the release. Note that the PCBWay zip was automatically created by KiBot
-      # since it doesn't have BOM or position files associated (like JLCPCB does) so the path to the file
-      # to upload is slightly different.
-      # If you are copying this to your own repo you'll want to remove the upload of the MobiFlight-Configuration
-      # zip file.
-      - name: Upload release files
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Archive all the artifacts from output and attach to the action's results.
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
         with:
-          files: |
-            ${{ env.BaseFileName }}-MobiFlight-Configuration.zip
-            ${{ env.BaseFileName }}-Documentation.zip
-            ${{ env.BaseFileName }}-JLCPCB.zip
-            ${{ env.OutputFolder }}/PCBWay/${{ env.BaseFileName }}-PCBWay.zip
+          name: schematic
+          path: ${{ env.OutputFolder }}/**

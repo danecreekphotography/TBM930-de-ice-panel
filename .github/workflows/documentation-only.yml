@@ -1,6 +1,8 @@
-# This workflow generates documentation (PDFs, interactive BOMs, board images) and fabrication
-# files for JLCPCB and PCBWay. The version number and date of the design is automatically
-# updated in the schematic file and on the PCB based on the GitHub release version and date.
+# This workflow generates documentation (PDFs, interactive BOMs, board images). The
+# The version number and date of the design is automatically updated in the schematic
+# file and on the PCB. The version number is set via an environment variable
+# and by default is `pre-release` since this runs outside of the release process
+# so there's no formal release number to use.
 
 # To use this workflow in your own repo you need to edit the environment variables in the env: section
 # below.
@@ -9,7 +11,7 @@ name: "KiBot - Generate documentation only"
 on: workflow_dispatch
 
 jobs:
-  FabricationAndDocumentation:
+  Documentation:
     env:
       # Set this to the base filename of your project.
       BaseFileName: TBM930_De-ice_panel
@@ -70,10 +72,10 @@ jobs:
 
       # Actually run KiBot to generate all the files. The KiBot script used is
       # in the .kibot/release.kibot.yaml folder.
-      - name: Generate documentation and fabrication files
+      - name: Generate documentation
         uses: INTI-CMNB/KiBot@v1
         with:
-          config: .kibot/release.kibot.yaml
+          config: .kibot/documentation-only.kibot.yaml
           dir: ${{ env.OutputFolder }}
           schema: ${{ env.BaseFileName }}.sch
           board: ${{ env.BaseFileName }}.kicad_pcb

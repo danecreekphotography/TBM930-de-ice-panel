@@ -19,6 +19,12 @@
       "title": "Release script"
     },
     {
+      "file": ".kibot/documentation-only.kibot.yaml",
+      "description": "This script doesn't do ERC or DRC and just generates all the documentation files. It's called from the documentation-only.yaml GitHub action, which is triggered manually from GitHub whenever documentation should be generated.",
+      "line": 1,
+      "title": "Documentation only script"
+    },
+    {
       "file": ".kibot/release.kibot.yaml",
       "description": "These imports are how KiBot knows what outputs to generate. To add support for another fabrication house create a .kibot.yaml file in `includes/` then include it here.",
       "line": 46,

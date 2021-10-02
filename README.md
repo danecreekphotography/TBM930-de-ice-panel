@@ -18,3 +18,13 @@ The easiest way to play with KiBot in this repo is to use
 [VSCode Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 Use the `Clone Repository in Container Volume...` command to clone this repo, then run the default build command
 to trigger KiBot. Output files are put in the `KiBotOutput` folder.
+
+Never used VSCode remote containers before on Windows? Here's how to get set up:
+
+1. From a PowerShell install WSL2 with this command: `wsl --install`
+2. Install [Visual Studio Code](https://code.visualstudio.com/Download) and Docker Desktop(https://www.docker.com/products/docker-desktop)
+3. Install the [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension for VSCode
+
+When installing Docker Desktop you may be told you have to enable virtualization in your computer's BIOS. Setting that up
+is outside the scope of this readme but isn't hard. Just do a web search for your motherboard for how to enter the BIOS
+and what the exact name of the setting is, then turn it on.

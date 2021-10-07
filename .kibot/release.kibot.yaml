@@ -15,15 +15,6 @@ global:
   # Sets the default output filename for all generated files. You likely don't have to change this.
   output: "%f-%i.%x"
 
-# This is only for JLCPCB export. Unfortunately KiBot imports don't support
-# declaring variants via an import file.
-variants:
-  - name: rotated
-    comment: "Just a place holder for the rotation filter"
-    type: kibom
-    variant: rotated
-    pre_transform: _rot_footprint
-
 filters:
   - name: "exclude_any"
     type: "generic"
@@ -32,18 +23,9 @@ filters:
       - column: Reference
         regex: "^(G|#|TP|F).*"
 
-  # This is only for JLCPCB export. Unfortunately KiBot imports don't support
-  # declaring variants via an import file.
-  - name: only_jlc_parts
-    comment: "Only parts with JLC code"
-    type: generic
-    include_only:
-      - column: "LCSC"
-        regex: '^C\d+'
-
-# This imports the KiBot scripts that actuall do all the generation. If you want to
+# This imports the KiBot scripts that actually do all the generation. If you want to
 # generate different things/more things then change these to point to other .kibot.yaml files.
 import:
-  - includes/documentation-2layer.kibot.yaml
-  - includes/JLCPCB-2layer.kibot.yaml
-  - includes/PCBWay-2layer.kibot.yaml
+  - file: includes/documentation-2layer.kibot.yaml
+  - file: includes/JLCPCB-2layer.kibot.yaml
+  - file: includes/PCBWay-2layer.kibot.yaml

@@ -1,4 +1,8 @@
-name: "KiBot"
+# This workflow runs erc and drc checks on every pull request that touches a scehmatic or PCB file.
+
+# To use this workflow in your own repo you need to edit the environment variables in the env: section
+# below.
+name: "KiBot - Preflight only"
 
 on:
   pull_request:
@@ -11,11 +15,14 @@ on:
 jobs:
   Preflight:
     env:
+      # Set this to the base filename of your project.
       BaseFileName: TBM930_De-ice_panel
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: INTI-CMNB/KiBot@v1
+
+      # Run KiBot with the preflight script
+      - uses: INTI-CMNB/KiBot@test_import
         with:
           config: .kibot/preflight.kibot.yaml
           schema: ${{ env.BaseFileName }}.sch

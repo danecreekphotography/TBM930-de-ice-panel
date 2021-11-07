@@ -1,3 +1,20 @@
+# This KiBot script generates gerbers, drill, bom, and position files for submitting
+# two layer boards to JLCPCB.
+variants:
+  - name: rotated
+    comment: "Just a place holder for the rotation filter"
+    type: kibom
+    variant: rotated
+    pre_transform: _rot_footprint
+
+filters:
+  - name: only_jlc_parts
+    comment: "Only parts with JLC code"
+    type: generic
+    include_only:
+      - column: "LCSC"
+        regex: '^C\d+'
+
 outputs:
   - name: JLCPCB_gerbers
     comment: Gerbers - JLCPCB

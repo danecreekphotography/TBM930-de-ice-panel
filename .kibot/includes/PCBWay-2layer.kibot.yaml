@@ -1,9 +1,5 @@
-# Gerber and drill files for PCBWay, with stencil (solder paste)
-# URL: https://www.pcbway.com
-# Based on setting used by Gerber Zipper (https://github.com/g200kg/kicad-gerberzipper)
-kibot:
-  version: 1
-
+# This KiBot script generates gerbers, drill, bom, and position files for submitting
+# two layer boards to PCBWay.
 outputs:
   - name: PCBWay_gerbers
     comment: "Gerbers - PCBWay"

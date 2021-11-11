@@ -13,10 +13,34 @@
       "title": "Preflight script"
     },
     {
+      "file": ".kibot/preflight.kibot.yaml",
+      "description": "To require ERC to pass during pull requests set this to true.",
+      "line": 10,
+      "title": "Enabling ERC checks on pull requests"
+    },
+    {
+      "file": ".kibot/preflight.kibot.yaml",
+      "description": "To require DRC to pass on pull requests set this to true.",
+      "line": 11,
+      "title": "Enabling DRC checks on pull requests"
+    },
+    {
       "file": ".kibot/release.kibot.yaml",
       "description": "This script handles the release file generation. It sets some global variables then imports specific output scripts from the `includes/` folder.",
       "line": 1,
       "title": "Release script"
+    },
+    {
+      "file": ".kibot/release.kibot.yaml",
+      "description": "To require ERC to pass when creating a release set this to true.",
+      "line": 9,
+      "title": "Enabling ERC checks on releases"
+    },
+    {
+      "file": ".kibot/release.kibot.yaml",
+      "description": "To require DRC to pass when creating a release set this to true.",
+      "line": 10,
+      "title": "Enabling DRC checks on pull requests"
     },
     {
       "file": ".kibot/documentation-only.kibot.yaml",

@@ -9,12 +9,16 @@ name: "KiBot - Release"
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Design version"
+        required: true
+        default: "pre-release"
 
 jobs:
   FabricationAndDocumentation:
     env:
-      # Set this to the base filename of your project.
-      BaseFileName: TBM930_De-ice_panel
       # Set this to your local timezone. See https://www.wikiwand.com/en/List_of_tz_database_time_zones for valid strings.
       Timezone: America/Los_Angeles
       # Set this to the output folder for all of the generated files. Unless you have a very
@@ -79,8 +83,8 @@ jobs:
         with:
           config: .kibot/release.kibot.yaml
           dir: ${{ env.OutputFolder }}
-          schema: ${{ env.BaseFileName }}.sch
-          board: ${{ env.BaseFileName }}.kicad_pcb
+          schema: ${{ github.event.repository.name }}.sch
+          board: ${{ github.event.repository.name }}.kicad_pcb
 
       # Install the zip command line tool to package up the output
       - name: Install zip
@@ -89,20 +93,14 @@ jobs:
       # Zip all the documentation. Any files in the BOM, PDFs, and Renders subfolder
       # are automatically included.
       - name: Zip documentation
-        run: zip -qq -r "../${{ env.BaseFileName }}-Documentation.zip" BOM PDFs Renders
+        run: zip -qq -r "../${{ github.event.repository.name }}-Documentation.zip" BOM PDFs Renders
         working-directory: ${{ env.OutputFolder }}
 
       # Zip the JLCPCB files. This is a special step for JLCPCB because there are gerbers (already zipped by KiBot),
       # BOM, and position files for SMT fabrication.
       - name: Zip JLCPCB fabrication files
-        run: zip -qq -r "../../${{ env.BaseFileName }}-JLCPCB.zip" ${{ env.BaseFileName }}-JLCPCB.zip ${{ env.BaseFileName }}_bom_jlc.csv ${{ env.BaseFileName }}_cpl_jlc.csv
+        run: zip -qq -r "../../${{ github.event.repository.name }}-JLCPCB.zip" ${{ github.event.repository.name }}-JLCPCB.zip ${{ github.event.repository.name }}_bom_jlc.csv ${{ github.event.repository.name }}_cpl_jlc.csv
         working-directory: ${{ env.OutputFolder }}/JLCPCB
-
-      # This step is specific to this board design as it is for use with the MobiFlight desktop
-      # app. You should delete this step when using this in your own GitHub repo.
-      - name: Zip MobiFlight configuration
-        run: zip -qq -r "../${{ env.BaseFileName }}-MobiFlight-Configuration.zip" .
-        working-directory: "MobiFlight Configuration"
 
       # Upload all the zip files to the release. Note that the PCBWay zip was automatically created by KiBot
       # since it doesn't have BOM or position files associated (like JLCPCB does) so the path to the file
@@ -116,7 +114,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            ${{ env.BaseFileName }}-MobiFlight-Configuration.zip
-            ${{ env.BaseFileName }}-Documentation.zip
-            ${{ env.BaseFileName }}-JLCPCB.zip
-            ${{ env.OutputFolder }}/PCBWay/${{ env.BaseFileName }}-PCBWay.zip
+            ${{ github.event.repository.name }}-Documentation.zip
+            ${{ github.event.repository.name }}-JLCPCB.zip
+            ${{ env.OutputFolder }}/PCBWay/${{ github.event.repository.name }}-PCBWay.zip
+
+      # Archive all the artifacts from output and attach to the action's results.
+      # This is so they're made available when this workflow is run manually from the
+      # GitHub actions page.
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: release_files
+          path: ${{ env.OutputFolder }}/**

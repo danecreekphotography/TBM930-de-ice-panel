@@ -14,16 +14,13 @@ on:
 
 jobs:
   Preflight:
-    env:
-      # Set this to the base filename of your project.
-      BaseFileName: TBM930_De-ice_panel
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       # Run KiBot with the preflight script
-      - uses: INTI-CMNB/KiBot@test_import
+      - uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/preflight.kibot.yaml
-          schema: ${{ env.BaseFileName }}.sch
-          board: ${{ env.BaseFileName }}.kicad_pcb
+          schema: ${{ github.event.repository.name }}.sch
+          board: ${{ github.event.repository.name }}.kicad_pcb

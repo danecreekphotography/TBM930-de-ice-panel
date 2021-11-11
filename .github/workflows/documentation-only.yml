@@ -19,8 +19,6 @@ on:
 jobs:
   Documentation:
     env:
-      # Set this to the base filename of your project.
-      BaseFileName: TBM930_De-ice_panel
       # Set this to your local timezone. See https://www.wikiwand.com/en/List_of_tz_database_time_zones for valid strings.
       Timezone: America/Los_Angeles
       # Set this to the output folder for all of the generated files. Unless you have a very
@@ -75,12 +73,12 @@ jobs:
       # Actually run KiBot to generate all the files. The KiBot script used is
       # in the .kibot/release.kibot.yaml folder.
       - name: Generate documentation
-        uses: INTI-CMNB/KiBot@test_import
+        uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/documentation-only.kibot.yaml
           dir: ${{ env.OutputFolder }}
-          schema: ${{ env.BaseFileName }}.sch
-          board: ${{ env.BaseFileName }}.kicad_pcb
+          schema: ${{ github.event.repository.name }}.sch
+          board: ${{ github.event.repository.name }}.kicad_pcb
 
       # Archive all the artifacts from output and attach to the action's results.
       - name: Archive production artifacts
